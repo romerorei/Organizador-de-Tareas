@@ -82,11 +82,11 @@ class Task < ApplicationRecord
     # se invoca la clase ParticipantMailer se la pasan con el metodo with los parametro task y user y se llama al action new_task_email
     # deliver! es para asegurar que el correo se envie
     def send_email
+      return unless Rails.env.development?
       (participants + [owner]).each do |user|
         ParticipantMailer.with(user: user, task: self).new_task_email.deliver!
       end
     end
-
 
 end
 
