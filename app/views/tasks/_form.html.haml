@@ -1,0 +1,64 @@
+-# frozen_string_literal: true
+  = simple_form_for(@task) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :name
+    = f.input :description
+    = f.input :due_date
+    = f.association :category
+    -# simple_fields_for  permite asociar un metodo o modelo anidado que tenga referenciado en la estruutra de modelos
+    -# basicamente me permite asosiar los participantes a las tareas
+    
+    #addParticipants 
+      -# link_to_add_association es un helper de cocoon que nos permite hace una etiqueta anccord
+      -# con este helper vamos a podere refrencaiar la informaion del parcial que se este añadiendo dinamicamente
+      = link_to_add_association f, :participating_users, 'data-association-insertion-node' => '.participants .participants-container', 'data-turbolinks' => false do
+        agregar participante
+      
+    .participants 
+      = f.simple_fields_for :participating_users do |g|
+        = render 'participating_user_fields', f: g
+        -# participating_user_fields' es un archivo
+        -# a trsves de de este archivo podemos trasferiri todos lo uq e queremos parametrizar
+        -# en el modelo participating_users que esta asociado a la actual tarea
+        -# localmnte le asginams una variable d nombre 'f' q esta referenciad al constutor 'g'
+      .participants-container
+
+  .form-actions
+    = f.button :submit
+
+-# frozen_string_literal: true
+= simple_form_for(@task) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    .row
+      .col-sm-6
+        = f.input :name, label: 'Nombre'
+      .col-sm-3
+        = f.input :due_date, as: :string, input_html: { type: :date }, label: 'Fecha de vencimiento'
+      .col-sm-3
+        = f.association :category, label: 'Categoría'
+    .row
+      .col-sm-12
+        = f.input :description
+    #addParticipants
+      %br
+      %h3
+        .uppercased-font{ style: 'display: inline-block;' } Participantes
+        = link_to_add_association f, :participating_users, class: 'btn btn-info float-right', 'data-association-insertion-node' => '.participants .participants-container', 'data-turbolinks' => false do
+          Agregar un participante
+          .fa.fa-plus-circle
+    .participants
+      = f.simple_fields_for :participating_users do |g|
+        = render 'participating_user_fields', f: g
+      .participants-container
+  .form-actions
+    = f.button :submit, class: 'btn btn-info'
+
+
+
+

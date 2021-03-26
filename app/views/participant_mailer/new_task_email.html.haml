@@ -1,0 +1,30 @@
+%h1
+    Hola
+    = @user.email
+    , tienes una nueva tarea asignada 
+
+%p
+    %b Nombre
+    = @task.name
+
+%p
+    %b Descripcion
+    = @task.description
+
+%p
+    %b Categoria
+    = @task.category.name
+
+%p
+    %b Creador:
+    = @task.owner.email
+
+%p
+  %b Participantes  :
+  - @task.participants.each do |participant|
+    = participant.email
+    ,
+
+%p
+    %b Ir a la tarea
+    = link_to @task.code, @task
