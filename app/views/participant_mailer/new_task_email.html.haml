@@ -20,10 +20,10 @@
     = @task.owner.email
 
 %p
-  %b Participantes  :
-  - @task.participants.each do |participant|
-    = participant.email
-    ,
+    %b Participantes  :
+    - @task.participants.each do |participant|
+        = participant.email
+        ,
 
 %p
     %b Ir a la tarea

@@ -7,12 +7,15 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-import "bootstrap"
 
+import "bootstrap"
 import "roboto-fontface"
 require("cocoon")
+import "selectize"
 
 import "../src/stylesheets/application"
+import "../src/javascripts/main"
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

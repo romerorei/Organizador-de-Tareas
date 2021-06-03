@@ -1,19 +1,18 @@
 class TasksController < ApplicationController
   load_and_authorize_resource # metodo de devise: con esto decime que todo lo que esta dentro de ability y la tarea (task) se va a asumir como reglas de acceso a este controlador
   # load_and_authorize_resource reconoce al ability por convencion
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: [ :show, :edit, :update, :destroy, :trigger ]
 
   # GET /tasks or /tasks.json
   def index
-
     # estas lineas me permiten q solo solo se muestren las tareas a las que el user sea owner o particpants
     # antes estaba @tasks = Task.All pero asi los usuaarios podian todas las tareas incluyendo las q no eran ni owner ni particpans
-    @tasks = Task.joins(:participants).where(
-      'owner_id = ? OR participants.user_id = ?',
-      current_user.id,
-      current_user.id,
-    ).group(:id)
-  
+    # @tasks = Task.joins(:participants).where(
+    #   'owner_id = ? OR participants.user_id = ?',
+    #   current_user.id,
+    #   current_user.id,
+    # ).group(:id)
+    @tasks = (current_user.owned_tasks + current_user.tasks).uniq
   
   end
 
@@ -70,6 +69,11 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  # Esta action va a recibir un parameteo que permite actualizar el estado de una trea en especifico
+  def trigger 
+    Tasks::TriggerEvent.new.call @task, params[:event]
   end
 
   private

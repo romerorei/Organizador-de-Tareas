@@ -1,14 +1,11 @@
-# == Schema Information
-#
-# Table name: categories
-#
-#  id          :bigint           not null, primary key
-#  name        :string
-#  description :text
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#
-class Category < ApplicationRecord
+
+class Category
+    include Mongoid::Document
+    include Mongoid::Timestamps
+    
+    field :name, type: String
+    field :description, type: String
+
     #una categoria puede tener muchas tasks
     has_many :tasks # tiene muchas tareas o tasks
 

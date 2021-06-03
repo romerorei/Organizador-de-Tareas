@@ -6,7 +6,8 @@ ruby '2.7.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.5'
 # Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'mongoid', github: 'mongodb/mongoid', branch: 'master'
+#gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -24,13 +25,15 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'hamlit'
 gem 'simple_form'
-gem 'annotate'
+# gem 'annotate'
 gem 'rails-i18n'
 gem 'devise'
 gem 'cocoon'
 gem 'cancancan'
 gem 'font-awesome-sass', '~> 5.12.0'
 gem 'mimemagic'
+gem 'sucker_punch'
+gem 'aasm'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -43,6 +46,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'pry-doc'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails' #frabricas automaticas de instancias del mismo modelo, categorias tares usuarios
 end
 
 group :development do
@@ -58,6 +63,15 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+group :test do
+  gem 'database_cleaner', '~> 1.99'
+  gem 'faker' # genera datos falson
+  gem 'mongoid-rspec'
+  gem 'capybara' # para iteracciones graficas
+  gem 'rails-controller-testing'
+  gem 'selenium-webdriver'
+end
 
 group :production do
 

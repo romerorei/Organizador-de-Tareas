@@ -41,7 +41,8 @@
       .col-sm-3
         = f.input :due_date, as: :string, input_html: { type: :date }, label: 'Fecha de vencimiento'
       .col-sm-3
-        = f.association :category, label: 'Categoría'
+        = f.input :category_id, label: 'Categoria', as: :select, collection: Category.all, input_html: { class: 'selectize' }
+          
     .row
       .col-sm-12
         = f.input :description
@@ -59,6 +60,7 @@
   .form-actions
     = f.button :submit, class: 'btn btn-info'
 
-
+:javascript
+  PLATZI.tasks.form.setup()
 
 
